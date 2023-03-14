@@ -1,0 +1,34 @@
+.key {
+  width: 8.5%;
+  height: auto;
+  padding: 2rem 0.5rem;
+  background-color: rgb(60, 60, 60);
+  color: white;
+  font-size: 2.4rem;
+  border-radius: 1rem;
+  text-align: center;
+  cursor: pointer;
+
+  &_default {
+    background-color: rgb(60, 60, 60);
+  }
+
+  &_yellow {
+    background-color: rgb(255, 166, 0);
+  }
+
+  &_green {
+    background-color: green;
+  }
+
+  &_grey {
+    background-color: rgb(150, 150, 150);
+    color: rgb(60, 60, 60);
+  }
+}
+
+@media (max-width: 800px) {
+  .key {
+    padding: 1rem 0.5rem;
+  }
+}
