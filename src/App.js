@@ -4,8 +4,13 @@ import Board from './components/Board';
 import Keyboard from './components/Keyboard';
 import Title from './components/UI/Title';
 import Wrapper from './components/UI/Wrapper';
-import { setCurrentRowColor, setWord } from './store/wordSlice';
+import {
+  resetEnteredWord,
+  setCurrentRowColor,
+  setWord,
+} from './store/wordSlice';
 import { words } from './constatns/words';
+import { dictionary } from '@/constatns/dictionary';
 import ErrorMessage from './components/ErrorMessage';
 import ModalWindow from './components/UI/ModalWindow';
 
@@ -38,10 +43,11 @@ const App = () => {
   const clickCheckButtonHandler = () => {
     if (
       enteredWord.length > 0 &&
-      words.find((word) => {
+      dictionary.find((word) => {
         return word === enteredWord.toLowerCase();
       })
     ) {
+      dispatch(resetEnteredWord());
       dispatch(setCurrentRowColor());
       setIsError(false);
       if (enteredWord.toLowerCase() === guessWord) {

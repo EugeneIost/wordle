@@ -96,6 +96,10 @@ const wordSlice = createSlice({
       state.enteredWord = initialState.enteredWord;
       state.currentRowIndex = initialState.currentRowIndex;
     },
+
+    resetEnteredWord(state) {
+      state.enteredWord = initialState.enteredWord;
+    },
   },
 });
 
@@ -106,5 +110,6 @@ export const {
   incCurrentRowIndex,
   setCurrentRowColor,
   resetStates,
+  resetEnteredWord,
 } = wordSlice.actions;
 export default wordSlice;
