@@ -8,17 +8,17 @@ const a11yOff = Object.keys(require('eslint-plugin-jsx-a11y').rules).reduce(
 
 module.exports = {
   parser: '@babel/eslint-parser',
-  // settings: {
-  //   'import/resolver': {
-  //     webpack: {
-  //       config: 'webpack.config.js',
-  //     },
-  //   },
-  // },
-
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: 'webpack.config.js',
+      },
+    },
+  },
   env: {
     browser: true,
     node: true,
+    screen: true,
   },
   extends: [
     'airbnb',
@@ -56,8 +56,8 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-restricted-exports': 'off',
     'react/prop-types': 'off',
-    // 'import/extensions': 'off',
-    // 'import/prefer-default-export': 'off',
+    'import/prefer-default-export': 'off',
+    'react/no-array-index-key': 'off',
     'react/function-component-definition': [
       2,
       {

@@ -1,77 +1,75 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Board from './components/Board';
+import ErrorMessage from './components/UI/ErrorMessage';
 import Keyboard from './components/Keyboard';
+import ModalWindow from './components/UI/ModalWindow';
 import Title from './components/UI/Title';
 import Wrapper from './components/UI/Wrapper';
 import {
-  resetEnteredWord,
-  setCurrentRowColor,
-  setWord,
-} from './store/wordSlice';
-import { words } from './constatns/words';
-import { dictionary } from '@/constatns/dictionary';
-import ErrorMessage from './components/ErrorMessage';
-import ModalWindow from './components/UI/ModalWindow';
+  checkButtonClick,
+  resetErrorMessage,
+  resetState,
+} from './store/gameSlice';
+import RulesButton from './components/UI/RulesButton';
+import GameOver from './components/GameOver';
+import Rules from './components/UI/Rules';
 
 const App = () => {
   const dispatch = useDispatch();
-  const enteredWord = useSelector((state) => state.word.enteredWord);
-  const guessWord = useSelector((state) => state.word.word);
-  const currentRowIndex = useSelector((state) => state.word.currentRowIndex);
-  const [isError, setIsError] = useState(null);
-  const [endGameMessage, setEndGameMessage] = useState('');
+  const errorMessage = useSelector((state) => state.game.errorMessage);
+  const gameOverMessage = useSelector((state) => state.game.gameOverMessage);
+
+  const [rulesModalIsVisible, setRulesModalIsVisible] = useState(false);
 
   useEffect(() => {
-    if (isError) {
+    if (errorMessage) {
       setTimeout(() => {
-        setIsError(false);
+        dispatch(resetErrorMessage());
       }, 3000);
     }
-  }, [isError]);
+  }, [dispatch, errorMessage]);
 
   useEffect(() => {
-    if (currentRowIndex > 5) {
-      setEndGameMessage('Вы проиграли!');
+    dispatch(resetState());
+
+    try {
+      screen.orientation.lock('portrait');
+    } catch (_) {
+      console.log('device does not support orientation lock');
     }
-  }, [currentRowIndex, setEndGameMessage]);
-
-  useEffect(() => {
-    dispatch(setWord(words[Math.trunc(Math.random() * words.length - 1)]));
   }, [dispatch]);
 
   const clickCheckButtonHandler = () => {
-    if (
-      enteredWord.length > 0 &&
-      dictionary.find((word) => {
-        return word === enteredWord.toLowerCase();
-      })
-    ) {
-      dispatch(resetEnteredWord());
-      dispatch(setCurrentRowColor());
-      setIsError(false);
-      if (enteredWord.toLowerCase() === guessWord) {
-        setEndGameMessage('Вы угадали слово!');
-      }
-    } else {
-      setIsError(true);
-    }
+    dispatch(checkButtonClick());
+  };
+
+  const rulesButtonClickHandler = () => {
+    setRulesModalIsVisible((current) => !current);
   };
 
   return (
-    <Wrapper>
-      {endGameMessage && (
-        <ModalWindow setEndGameMessage={setEndGameMessage}>
-          {endGameMessage}
+    <>
+      {gameOverMessage && (
+        <ModalWindow>
+          <GameOver />
         </ModalWindow>
       )}
-      <ErrorMessage isError={isError}>
-        Введенного слова не существует в словаре или в нем не достаточно букв!
-      </ErrorMessage>
-      <Title>Угадай слово</Title>
-      <Board />
-      <Keyboard clickCheckButtonHandler={clickCheckButtonHandler} />
-    </Wrapper>
+
+      {rulesModalIsVisible && (
+        <ModalWindow>
+          <Rules onClick={rulesButtonClickHandler} />
+        </ModalWindow>
+      )}
+
+      <Wrapper>
+        <ErrorMessage isVisible={errorMessage}>{errorMessage}</ErrorMessage>
+        <RulesButton onClick={rulesButtonClickHandler} />
+        <Title>Угадай слово</Title>
+        <Board />
+        <Keyboard clickCheckButtonHandler={clickCheckButtonHandler} />
+      </Wrapper>
+    </>
   );
 };
 
