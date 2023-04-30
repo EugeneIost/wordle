@@ -10,7 +10,7 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'build'),
-    publicPath: '/',
+    publicPath: 'auto',
     assetModuleFilename: 'assets/[hash][ext][query]',
   },
   plugins: [

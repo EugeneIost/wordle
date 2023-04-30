@@ -1,9 +1,10 @@
 .modal {
   position: absolute;
-  width: 80rem;
-  height: auto;
+  // width: 80rem;
+  // height: auto;
   // max-height: 100%;
-  top: 40%;
+  width: 100rem;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
@@ -24,54 +25,18 @@
     right: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.8);
     z-index: 5;
-  }
-
-  &__word {
-    color: white;
-    font-size: 2.4rem;
-    font-weight: 400;
-    text-align: center;
-    margin: 0;
-  }
-
-  &__attempts {
-    color: white;
-    font-size: 1.8rem;
-    text-align: center;
-    margin: 2rem 0;
-  }
-
-  &__reset {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-radius: 2rem;
-    background-color: green;
-    border: none;
-    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-    padding: 1rem 2rem;
-    cursor: pointer;
-    margin-bottom: 2rem;
-  }
-
-  &__reset-text {
-    color: white;
-    font-size: 1.8rem;
-    font-weight: 400;
-    margin: 0;
-  }
-
-  &__reset-icon {
-    width: 3.2rem;
   }
 }
 
+@media (max-width: 1000px) {
+  .modal {
+    width: 80rem;
+  }
+}
 @media (max-width: 800px) {
   .modal {
-    left: 50%;
-    top: 50%;
     width: 100%;
     height: 100%;
     border-radius: 0;
